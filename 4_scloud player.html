@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundcloud Player Webpage</title>
+    <link rel="stylesheet" href="scloud player.css" />
+    <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+</head>
+<body>
+    <div class="hero">
+        <div class="music">
+            <p>Artist: Cranberries</p>
+            <h1>Dopamine Remix</h1>
+            <div class="track">
+                <img src="play.png" id="playBtn" />
+                <div id="waveform"></div>
+            </div>
+        </div>
+    </div>  
+
+    <script>
+        var playBtn = document.getElementById("playBtn");
+
+        // Initialize a waveform instance
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',  // The container element for the waveform
+            waveColor: '#ddd',       // The color of the waveform
+            progressColor: '#999',    // The color of the progress bar
+            cursorColor: "#999",        // Ccursor color
+            // backgroundColor: '#999', // commented out cuz it doesnt look good
+            cursorWidth: 2,             // width of cursor (integers)
+            barGap: 3,              // gap between bars
+            barMinHeight: 1,        // min bar height
+            barWidth: 3,            // width / pixelation of bars
+            responsive: true,
+            height: 90,
+            barRadius: 2, 
+            audioRate: 1,            // effects payback speed, 2 is +1 octave (i think)
+        });
+
+        // Load an audio file into the waveform
+        wavesurfer.load('test.wav');
+
+        playBtn.onclick = function () {
+            wavesurfer.playPause();
+
+            // changing button to play / pause
+            if (playBtn.src.includes("play.png")){
+                playBtn.src = "pause.png";
+            }else{
+                playBtn.src = "play.png";
+            }
+        }
+        wavesurfer.on('finish', function () {
+            playBtn.src = "play.png";
+            wavesurfer.stop();
+        
+        })
+
+        // MAKE USER DOWNLOAD POSSIBLE
+        /*
+        // Export the modified audio as a PCM data array
+        const pcmData = wavesurfer.exportPCM(1024, true, true);
+
+        // Convert the PCM data to an audio file using the Web Audio API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const audioBuffer = audioCtx.createBuffer(2, pcmData.length, 44100);
+        audioBuffer.getChannelData(0).set(pcmData[0]);
+        audioBuffer.getChannelData(1).set(pcmData[1]);
+
+        const audioBlob = new Blob([audioBuffer], { type: "audio/mpeg" });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        // Use the `a` element with the `download` attribute to allow the user to download the audio file
+        const link = document.createElement("a");
+        link.href = audioUrl;
+        link.download = "modified-audio.mp3";
+        link.click(); 
+        */
+        
+
+    </script>
+</body>
+</html>

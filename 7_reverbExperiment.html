@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV Player, User Upload</title>
+    <link rel="stylesheet" href="scloud player.css" />
+    <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+
+</head>
+<body class="body">
+    <!--STUFF THAT HAPPENS ON LOAD-->
+    <div class="hero">
+        <p style="color: snow; text-align: center; font-family: fantasy; letter-spacing: 2px;">
+            Welcome to the Acidifier
+        </p>
+        <div class="music">
+            <!-- File input field to select a WAV file -->
+            <input type="file" accept="audio/*" id="inputFile">
+            <script>
+                    document.addEventListener('keydown', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                        // Do something here when the spacebar is pressed
+                    }
+});
+            </script>
+            <div class="track">
+                <img src="play.png" id="playBtn" />
+                <div id="waveform"></div>
+                <div class="volSliderBox">
+                    <input type="range" min="0" max="100" value="50" class="slider" id="sliderVol">
+                    <script>
+                        var sliderVol = document.querySelector('#sliderVol');
+                        sliderVol.addEventListener('input', function () {
+                            wavesurfer.setVolume(this.value / 100);
+});
+                    </script>
+                    <p style="margin-top: 25px;">vol.</p>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <!--REVERB STUFF-->
+            <div class="reverb-section" style="justify-items: center; align-items: center; display: grid; grid-template-columns: repeat(1, 1fr); margin-top: 30px;">
+                <!--INPUT FILE-->
+                <input type="file" accept="audio/*" id="impulseResponseFile">
+                <!--APPLY VERB BUTTON-->
+                <button style="margin-top: 30px;">reverb on</button>
+
+
+                <!--REVERB SCRIPT-->
+                <script>
+                    // create a variable to hold the selected file
+                    var impulseResponseFile = document.getElementById("impulseResponseFile");
+
+
+
+                </script>
+
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+            <script>
+                var playBtn = document.getElementById("playBtn");
+
+                // Initialize a waveform instance
+                var wavesurfer = WaveSurfer.create({
+                    container: '#waveform',  // The container element for the waveform
+                    waveColor: '#ddd',       // The color of the waveform
+                    progressColor: '#999',    // The color of the progress bar
+                    cursorColor: "#999",        // Ccursor color
+                    // backgroundColor: '#999', // commented out cuz it doesnt look good
+                    cursorWidth: 2,             // width of cursor (integers)
+                    barGap: 3,              // gap between bars
+                    barMinHeight: 1,        // min bar height
+                    barWidth: 3,            // width / pixelation of bars
+                    responsive: true,
+                    height: 90,
+                    barRadius: 2,
+                    audioRate: 1,            // effects payback speed, 2 is +1 octave (i think)
+                    autoCenter: true,       // ensures cursor is in the center when scrolling
+                });
+
+                // Get a reference to the file input field and audio player
+                var inputFile = document.getElementById("inputFile");
+
+                // Add an event listener to the file input field to update the audio player when a file is selected
+                inputFile.addEventListener("change", function () {
+                    // Get the selected file
+                    var file = inputFile.files[0];
+
+                    // Update the audio player with the selected file
+                    var file = URL.createObjectURL(file)
+                    wavesurfer.load(file);
+
+                });
+// wavsurfer playing and pausing
+playBtn.onclick = function () {
+                    wavesurfer.playPause();
+}
+document.addEventListener('keydown', function (event) {
+                    if (event.keyCode === 32) {
+                        wavesurfer.playPause();
+                    }
+});
+wavesurfer.on('finish', function () {
+                    playBtn.src = "play.png";
+                    wavesurfer.stop();
+});
+wavesurfer.on('pause', function () {
+                    playBtn.src = "play.png";
+});
+wavesurfer.on('play', function () {
+                    playBtn.src = "pause.png";
+});
+
+            </script>
+</body>
+</html>

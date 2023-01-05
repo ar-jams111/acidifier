@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soundcloud Player Webpage</title>
+    <link rel="stylesheet" href="scloud player.css" />
+    <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+</head>
+<body>
+    <audio src="ImpulseResponse.wav" id="impWav"></audio>
+    <div class="hero">
+        <p style="color: snow; text-align: center; font-family: fantasy; letter-spacing: 2px;">
+            Welcome to the Acidifier
+            <div class="music">
+                <p>Artist: Cranberries</p>
+                <h1>Dopamine Remix</h1>
+                <div class="track">
+                    <img src="play.png" id="playBtn" />
+                    <div id="waveform"></div>
+                </div>
+                <div class="slider-grid" style="margin-top: 30px;justify-items: left; align-items: center; display: grid; grid-template-columns: repeat(1, 1fr);">
+                    <!-- input impulse file -->
+                    <input type="file" accept="audio/*" id="impInput">
+                    <!-- play impulse file -->
+                    <audio style="margin-top: 30px;" id="impPlayer" controls></audio>
+                    <!-- toggle reverb button -->
+                    <button style=" margin-top: 30px;" id="toggleReverbButton">toggle reverb</button>
+                    <!-- Script for loading impulse response file -->
+                    <script>
+                        // Get a reference to the file input field and audio player
+                        var impInput = document.getElementById("impInput");
+                        var impPlayer = document.getElementById("impPlayer");
+
+                        // Add an event listener to the file input field to update the audio player when a file is selected
+                        impInput.addEventListener("change", function () {
+                            // Get the selected file
+                            var impFile = impInput.files[0];
+
+                            // Update the audio player with the selected file
+                            impPlayer.src = URL.createObjectURL(impFile);
+                            impPlayer.load();
+                        });
+                    </script>
+
+                    <!-- REVERB SCRIPT (adding to be initialized immediately)-->
+                    <script>
+                        // sets a reverb filter when imp file is selected
+                        var impInput = document.getElementById("impInput");
+                        impInput.addEventListener("change", function () {
+                            var convolver = wavesurfer.backend.ac.createConvolver();
+
+                            var impFile = impInput.files[0];
+                            var fileReader = new FileReader();
+                            fileReader.readAsArrayBuffer(impFile);
+                            fileReader.onload = function (event) {
+                                var impArrayBuffer = event.target.result;
+                                wavesurfer.backend.ac.decodeAudioData(impArrayBuffer).then(function (audioBuffer) {
+                                    convolver.buffer = audioBuffer;
+                                    wavesurfer.backend.setFilter(convolver);
+                                }).catch(function (error) {
+                                    console.error(error);
+                                });
+                                wavesurfer.backend.setFilter(convolver)
+
+
+                            };
+                        });
+
+
+                    </script>
+                </div>
+            </div>
+    </div>
+
+    <script>
+        // Initialize a waveform instance
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',  // The container element for the waveform
+            waveColor: '#ddd',       // The color of the waveform
+            progressColor: '#999',    // The color of the progress bar
+            cursorColor: "#999",        // Ccursor color
+            // backgroundColor: '#999', // commented out cuz it doesnt look good
+            cursorWidth: 2,             // width of cursor (integers)
+            barGap: 3,              // gap between bars
+            barMinHeight: 1,        // min bar height
+            barWidth: 3,            // width / pixelation of bars
+            responsive: true,
+            height: 90,
+            barRadius: 2,
+            audioRate: 1,            // effects payback speed, 2 is +1 octave
+        });
+
+        // Load an audio file into the waveform
+        wavesurfer.load('test.wav');
+
+        var playBtn = document.getElementById("playBtn");
+        playBtn.onclick = function () {
+            wavesurfer.playPause();
+
+            // changing button to play / pause
+            if (playBtn.src.includes("play.png")) {
+                playBtn.src = "pause.png";
+            } else {
+                playBtn.src = "play.png";
+            }
+        }
+
+        // Reset when the file plays out
+        wavesurfer.on('finish', function () {
+            playBtn.src = "play.png";
+            wavesurfer.stop();
+
+        })
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV Player, User Upload</title>
+    <link rel="stylesheet" href="scloud player.css" />
+    <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+
+</head>
+<body class="body">
+    <!--STUFF THAT HAPPENS ON LOAD-->
+    <script>
+        window.onload = function () {
+            wavesurfer.setVolume(.5);
+        };
+    </script>
+    <div class="hero">
+        <p style="color: snow; text-align: center; font-family: fantasy; letter-spacing: 2px;">
+            Welcome to the Acidifier
+        </p>
+        <div class="music">
+            <!-- File input field to select a WAV file -->
+            <input type="file" accept="audio/*" id="inputFile">
+            <script>
+                document.addEventListener('keydown', function (event) {
+                    if (event.keyCode === 32) {
+                        event.preventDefault();
+                        // Do something here when the spacebar is pressed
+                    }
+                });
+            </script>
+            <div class="track">
+                <img src="play.png" id="playBtn" />
+                <div id="waveform"></div>
+                <div class="volSliderBox">
+                    <input type="range" min="0" max="100" value="50" class="slider" id="sliderVol">
+                    <script>
+                        var sliderVol = document.querySelector('#sliderVol');
+                        sliderVol.addEventListener('input', function () {
+                            wavesurfer.setVolume(this.value / 100);
+                        });
+
+                    </script>
+                    <p style="margin-top: 25px;">vol.</p>
+                </div>
+            </div>
+            <!-- SLIDER GRID DIV -->
+            <div class="slider-grid" style="justify-items: center; align-items: center; display: grid; grid-template-columns: repeat(3, 1fr);">
+
+                <!-- SLIDERS -->
+                <input type="range" min="-24" max="24" value="0" class="slider" id="slider1">
+                <input type="range" min="0" max="100" value="50" class="slider" id="slider2">
+                <input type="range" min="100" max="435" value="435" class="slider" id="slider3">
+
+                <!-- VALUE DISPLAY -->
+                <span id="slider1-value" style="color: black; text-align: center; font-family: fantasy; letter-spacing: 2px;">0</span>
+                <span id="slider2-value" style="color: black; text-align: center; font-family: fantasy; letter-spacing: 2px;">50</span>
+                <span id="slider3-value" style="color: black; text-align: center; font-family: fantasy; letter-spacing: 2px;">22000</span>
+
+                <!-- DESCRIPTION -->
+                <p>Semitones</p>
+                <p>Reverb (% wet)</p>
+                <p>Filter (Hz)</p>
+
+            </div>
+
+            <!-- Slider Script -->
+            <script>
+                // Get a reference to the slider and value display
+                var slider1 = document.getElementById("slider1");
+                var slider2 = document.getElementById("slider2");
+                var slider3 = document.getElementById("slider3");
+
+                var valueDisplay1 = document.getElementById("slider1-value");
+                var valueDisplay2 = document.getElementById("slider2-value");
+                var valueDisplay3 = document.getElementById("slider3-value");
+
+                // ADJUST SPEED (slider 1)
+                slider1.addEventListener('input', function () {
+                    if (wavesurfer.isPlaying()) {
+                        wavesurfer.pause()
+                        var playBackSpeed = Math.pow(2, slider1.value / 12)
+                        wavesurfer.setPlaybackRate(playBackSpeed);
+                        wavesurfer.play()
+                    } else {
+                        wavesurfer.pause()
+                        var playBackSpeed = Math.pow(2, slider1.value / 12)
+                        wavesurfer.setPlaybackRate(playBackSpeed);
+                    }
+
+                    valueDisplay1.innerHTML = slider1.value;
+                });
+
+                // ADJUST REVERB
+                slider2.addEventListener("input", function () {
+                    valueDisplay2.innerHTML = slider2.value;
+                    /* FIGURING OUT VERB
+                    var convolver = wavesurfer.backend.ac.createConvolver();
+                    const reverbUrl = 'https://www.enterurlhere';
+
+                    fetch(reverbUrl)
+                        .then(response => response.arrayBuffer())
+                        .then(arrayBuffer => wavesurfer.backend.ac.decodeAudioData(arrayBuffer))
+                        .then(audioBuffer => {
+                            convolver.buffer = audioBuffer;
+                        });
+                    */
+
+                });
+
+                // ADJUST FILTER (slider 3)
+                slider3.addEventListener('input', function () {
+                    //LOW PASS FILTER
+                    // create a variable to quickly call the biquad filter
+                    var lowpass = wavesurfer.backend.ac.createBiquadFilter();
+                    // set the lowpass filter
+                    wavesurfer.backend.setFilter(lowpass);
+                    // create freq variable to convert linear slider value to exp
+                    var freq = Math.round(Math.pow(10, slider3.value / 100))
+                    // set the frequency value to the new freq variable
+                    lowpass.frequency.value = freq;
+                    if (freq <= 22000) {
+                        valueDisplay3.innerHTML = freq;
+                    } else {
+                        valueDisplay3.innerHTML = 22000;
+                    } 
+                });
+            </script>
+        </div>
+    </div>
+
+    <script>
+        var playBtn = document.getElementById("playBtn");
+
+        // Initialize a waveform instance
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',  // The container element for the waveform            
+            waveColor: '#ddd',       // The color of the waveform
+            progressColor: '#999',    // The color of the progress bar
+            cursorColor: "#999",        // Ccursor color
+            // backgroundColor: '#999', // commented out cuz it doesnt look good
+            cursorWidth: 2,             // width of cursor (integers)
+            barGap: 3,              // gap between bars
+            barMinHeight: 1,        // min bar height
+            barWidth: 3,            // width / pixelation of bars
+            responsive: true,
+            height: 90,
+            barRadius: 2,
+            audioRate: 1,            // effects payback speed, 2 is +1 octave (i think)
+            autoCenter: true,       // ensures cursor is in the center when scrolling
+
+
+        });
+
+        // Get a reference to the file input field and audio player
+        var inputFile = document.getElementById("inputFile");
+
+        // Add an event listener to the file input field to update the audio player when a file is selected
+        inputFile.addEventListener("change", function () {
+            // Get the selected file
+            var file = inputFile.files[0];
+
+            // Update the audio player with the selected file
+            var file = URL.createObjectURL(file)
+            wavesurfer.load(file);
+
+        });
+        // wavsurfer playing and pausing
+        playBtn.onclick = function () {
+            wavesurfer.playPause();
+        }
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 32) {
+                wavesurfer.playPause();
+            }
+        });
+        wavesurfer.on('finish', function () {
+            playBtn.src = "play.png";
+            wavesurfer.stop();
+        });
+        wavesurfer.on('pause', function () {
+            playBtn.src = "play.png";
+        });
+        wavesurfer.on('play', function () {
+            playBtn.src = "pause.png";
+        });
+
+    </script>
+</body>
+</html>

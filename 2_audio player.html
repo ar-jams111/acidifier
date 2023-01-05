@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<!--This program works with WAV, MP3, OGG, FLAC, AIFF, AU, and MIDI audio file types-->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>WAV Player</title>
+</head>
+<body>
+    <!-- Title -->
+    <h1 style="font-family: 'Courier New', Courier, monospace;">Wav Player</h1>
+    <!-- File input field to select a WAV file -->
+    <input type="file" accept="audio/*" id="inputFile">
+
+    <!-- Audio element to play the WAV file -->
+    <audio id="audioPlayer" controls></audio>
+
+    <script>
+// Get a reference to the file input field and audio player
+var inputFile = document.getElementById("inputFile");
+var audioPlayer = document.getElementById("audioPlayer");
+
+// Add an event listener to the file input field to update the audio player when a file is selected
+inputFile.addEventListener("change", function () {
+            // Get the selected file
+            var file = inputFile.files[0];
+
+            // Update the audio player with the selected file
+            audioPlayer.src = URL.createObjectURL(file);
+            audioPlayer.load();
+});
+    </script>
+</body>
+</html>

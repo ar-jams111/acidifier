@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Music Projects", "Music Projects", "{36285253-5D0B-469A-BEBB-C439E832030D}"
+	ProjectSection(SolutionItems) = preProject
+		1_first website.html = 1_first website.html
+		2_audio player.html = 2_audio player.html
+		3_nicer audio player.html = 3_nicer audio player.html
+		convert.html = convert.html
+		test.wav = test.wav
+		welcome.html = welcome.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scloud player files", "scloud player files", "{3753BAA2-8FFD-4B50-A020-17393A679EE6}"
+	ProjectSection(SolutionItems) = preProject
+		1_Large Long Echo Hall.wav = 1_Large Long Echo Hall.wav
+		2_Large Wide Echo Hall.wav = 2_Large Wide Echo Hall.wav
+		3_Right Glass Triangle.wav = 3_Right Glass Triangle.wav
+		4_scloud player.html = 4_scloud player.html
+		5_scloud upload.html = 5_scloud upload.html
+		6_WebAudioAPI Experiment.html = 6_WebAudioAPI Experiment.html
+		7_reverbExperiment.html = 7_reverbExperiment.html
+		8_addVerb.html = 8_addVerb.html
+		9.0_3Filters.html = 9.0_3Filters.html
+		9.1_node rearrange.html = 9.1_node rearrange.html
+		9.2_loadingDL.html = 9.2_loadingDL.html
+		acidRiotMusicPic.png = acidRiotMusicPic.png
+		ImpulseResponse.wav = ImpulseResponse.wav
+		IV-Atticus-Full-Color.jpg = IV-Atticus-Full-Color.jpg
+		pause.png = pause.png
+		play.png = play.png
+		Rick Astley - Never Gonna Give You Up (Official Music Video).mp3 = Rick Astley - Never Gonna Give You Up (Official Music Video).mp3
+		scloud player.css = scloud player.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9A92CEB6-4AA1-4594-8B67-F0AA6E73F2B8}"
+EndProject
+Global
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3753BAA2-8FFD-4B50-A020-17393A679EE6} = {36285253-5D0B-469A-BEBB-C439E832030D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E04433E2-159A-4DA4-BA25-9A61EABB9696}
+	EndGlobalSection
+EndGlobal

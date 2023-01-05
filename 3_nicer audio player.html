@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Player</title>
+    <style>
+        /* Add some basic styling */
+        h1 {
+            text-align: center; /* Center the heading */
+        }
+
+        p {
+            text-align: center; /* Center the paragraph */
+            font-style: italic; /* Italicize the text */
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #333;
+            color: #fff;
+        }
+
+        /* Style the file input field and audio player */
+        #inputFile {
+            display: block;
+            margin: 20px auto;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 2px; /* Add custom styles for the audio player */
+            color: #000000; /* Change the color of the controls */
+            background-color: #FFA500; /* Change the background color of the audio player */
+            font-size: 18px; /* Increase the font size of the controls */
+            padding: 10px; /* Add some padding around the controls */
+        }
+
+        #audioPlayer {
+            display: block;
+            margin: 20px auto;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            /* Add custom styles for the audio player */
+            color: #ff6a00; /* Change the color of the controls */
+            background-color: #FFA500; /* Change the background color of the audio player */
+            font-size: 18px; /* Increase the font size of the controls */
+            padding: 10px; /* Add some padding around the controls */
+        }
+    </style>
+</head>
+<body>
+    <!-- Page heading -->
+    <h1>Audio Player</h1>
+
+    <!-- Audio element to play the WAV file -->
+    <audio id="audioPlayer" controls></audio>
+
+    <!-- File input field to select a WAV file -->
+    <input type="file" accept="audio/*" id="inputFile">
+
+    <script>
+        // Get a reference to the file input field and audio player
+        var inputFile = document.getElementById("inputFile");
+        var audioPlayer = document.getElementById("audioPlayer");
+
+        // Add an event listener to the file input field to update the audio player when a file is selected
+        inputFile.addEventListener("change", function () {
+            // Get the selected file
+            var file = inputFile.files[0];
+
+            // Update the audio player with the selected file
+            audioPlayer.src = URL.createObjectURL(file);
+            audioPlayer.load();
+        });
+    </script>
+    <!-- Description of the audio player capabilities -->
+    <p>This audio player allows you to upload and play audio files in various formats, including WAV, MP3, OGG, FLAC, AIFF, and AU.</p>
+</body>
+</html>

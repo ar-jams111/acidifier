@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Pitch Shifter</title>
+</head>
+<body>
+    <input type="file" id="inputFile">
+    <button id="shiftButton">Shift Pitch Down</button>
+    <script>
+        var inputFile = document.getElementById("inputFile");
+        var shiftButton = document.getElementById("shiftButton");
+        shiftButton.addEventListener("click", function () {
+            var file = inputFile.files[0];
+            var reader = new FileReader();
+            reader.onload = function () {
+                var audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                var audioBuffer = audioCtx.createBuffer(reader.result, false);
+                var source = audioCtx.createBufferSource();
+                source.buffer = audioBuffer;
+
+                // Create a pitch shift node
+                var pitchShift = audioCtx.createPitchShiftNode();
+                pitchShift.pitch = -1; // pitch down by one octave
+
+                // Connect the audio buffer to the pitch shift node
+                pitchShift.buffer = audioBuffer;
+
+                // Create a new audio buffer with the pitch-shifted data
+                var shiftedBuffer = audioCtx.createBuffer(2, audioBuffer.length, audioBuffer.sampleRate);
+                pitchShift.connect(shiftedBuffer.getChannelData(0));
+                pitchShift.connect(shiftedBuffer.getChannelData(1));
+
+                // Create a new audio source using the pitch-shifted buffer
+                var shiftedSource = audioCtx.createBufferSource();
+                shiftedSource.buffer = shiftedBuffer;
+
+                // Connect the audio source to the audio context destination
+                // and start playing the audio
+                shiftedSource.connect(audioCtx.destination);
+                shiftedSource.start();
+    </script>
+</body>
+</html>
+

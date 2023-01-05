@@ -1,0 +1,735 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAV Player, User Upload</title>
+    <link rel="icon" type="image/jpeg" href="IV-Atticus-Full-Color.jpg">
+    <link rel="stylesheet" href="scloud player.css" />
+    <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body class="body">
+    <div class="hero" id="hero">
+        <p id="acid">
+            Welcome to the Acidifier
+            <input type="file" accept="audio/*" id="inputFile">
+        </p>
+        <div id="infoText" style="margin-top: 0px; display: flex; justify-content: center; align-items: center; flex-direction:column;">
+            <p style="color: snow; text-align: center; font-family: 'Times New Roman'; letter-spacing: 2px; font-size:14px;">
+                <strong>Files that work: </strong> MP3, WAV, ACC, FLAC<br /><br />
+            </p>
+            <p id="acidInfo">
+                <u>Don't have an audio file?</u><br /><br />
+                <a style="color: deepskyblue;" href="https://anything2mp3.cc/">https://anything2mp3.cc/</a> - converts youtube videos to MP3 and other formats<br />
+                <a style="color: deepskyblue;" href="https://www.looperman.com/">https://www.looperman.com/</a> - contains a variety of free audio loops<br />
+                <a style="color: deepskyblue;" href="https://freesound.org/">https://freesound.org/</a> - contains a variety of free audio samples<br /><br /><br />
+                Or click the logo below to let the Acidifier choose ;)
+                <br /><br />
+                <img src="acidRiotMusicPic.png" id="acidPic" />
+            </p>
+        </div>
+        <div class="music" id="musicBox">
+            <select id="presets">
+                <option id="presetNull" value="" disabled>Presets</option>
+                <option id="preset0" value="[0,435,0,50]">No Preset</option>
+                <option id="preset1" value="[-3,435,2,20]">Classic Slow & Reverb</option>
+                <option id="preset2" value="[2,435,3,25]">Lil Faster, Lil Verb</option>
+                <option id="preset3" value="[-6,350,1,60]">Off da Lean</option>
+                <option id="preset4" value="[6,435,0,50]">Off da Addy</option>
+                <option id="preset4" value="[0,268,1,80]">Bar Bathroom</option>
+                <option id="preset4" value="[-2,435,2,40]">Slow & Reverb, Atti's Version</option>
+            </select>
+            <div class="track" id="trackGroup">
+                <img src="play.png" id="playBtn" />
+                <div id="waveform"></div>
+                <div class="volSliderBox">
+                    <input type="range" min="0" max="100" value="50" class="slider" id="sliderVol">
+                    <p style="margin-top: 25px;">vol.</p>
+                </div>
+            </div>
+
+            <hr id="line" />
+
+            <!------------ SLIDER GRID ------------->
+            <div id="grid1" class="slider-grid" style="justify-items: center; align-items: center; display: grid; grid-template-columns: repeat(3, 1fr);">
+
+                <!-- SLIDERS -->
+                <!-- slider 1 -->
+                <input type="range" min="-24" max="24" value="0" class="slider" id="slider1">
+                <!-- menu 2 -->
+                <input type="range" min="0" max="100" value="50" class="slider" id="slider2">
+                <!-- slider 3 -->
+                <input type="range" min="100" max="435" value="435" class="slider" id="slider3">
+
+                <!-- VALUE DISPLAY -->
+                <span id="slider1-value" style="color: black; text-align: center; font-family: fantasy; letter-spacing: 2px;">0</span>
+                <div id="slider2WetPercent">
+                    <p style="margin: 0px;">Wet:</p>
+                    <span id="slider2-value">50%</span>
+                </div>
+                <span id="slider3-value" style="color: black; text-align: center; font-family: fantasy; letter-spacing: 2px;">22000</span>
+
+                <!-- DESCRIPTION -->
+                <p id="semitonesText">Semitones</p>
+                <select id="wavFiles">
+                    <option id="noVerb" value="">No Reverb</option>
+                    <option id="option1" value="1_Large Long Echo Hall.wav">Large Long Echo Hall</option>
+                    <option id="option2" value="2_Large Wide Echo Hall.wav">Large Wide Echo Hall</option>
+                    <option id="option3" value="3_Right Glass Triangle.wav">Right Glass Triangle</option>
+                </select>
+                <p id="fileterText">Filter (Hz)</p>
+            </div>
+        </div>
+
+
+        <!-- UNDER MUSIC BOX -->
+        <div id="subMusic" style="font-size: 12px;color: snow; justify-content: center; text-align: center; align-content: center;">
+            <div id="audioLength">Audio Length: <span id="songLength"></span></div>
+            <button id="downloadButton"><span id="exportStatus">EXPORT</span></button>
+            <span id="exportInProg" display="none"></span>
+            <span id="rickMayNotExport" style=" color: red; padding: 10px;"></span>
+        </div>
+
+        <div id="waveformOffline"></div>
+    </div>
+
+
+
+    <!-- FOOTER -->
+    
+    <footer class="footer">
+        <div id="footerDiv1">
+            <p>
+                The Acidifier was created by Atticus Rush, Chief Wizard of
+                <a style="color: deepskyblue;" href="https://www.acidriotmusic.com/">AcidRiotMusic.com</a><br /><br />
+                <a style="color: deeppink;" href="https://instagram.com/ar_jams111">insta</a>&nbsp;
+                <a style="color: darkorange;" href="https://soundcloud.com/atticus-rush">soundcloud</a>&nbsp;
+                <a style="color: gold;" href="https://www.acidriotmusic.com/beats">beats</a>&nbsp;
+                <a style="color: lawngreen;" href="https://open.spotify.com/artist/04RM1Idq4HPTR4aLqEr8MI">spotify</a>&nbsp;
+                <a style="color: blueviolet;" href="https://linktr.ee/AR_JAMS111">other stuff</a>
+
+                <!--<img src="acidRiotMusicPic.png" id="acidPic" /> -->
+            </p>
+        </div>
+    </footer>
+
+
+
+
+    <!-- //////////////////------------SCRIPT------------////////////////////////// -->
+
+
+
+
+    <script>
+
+        // X--------------- WAV ENCODER FUNCTION (eventually export to its own .js file)----------------X
+
+        function encodeWAV(samples, sampleRate) {
+            const buffer = new ArrayBuffer(44 + samples.length * 2);
+            const view = new DataView(buffer);
+
+            /* RIFF identifier */
+            writeString(view, 0, 'RIFF');
+            /* RIFF chunk length */
+            view.setUint32(4, 36 + samples.length * 2, true);
+            /* RIFF type */
+            writeString(view, 8, 'WAVE');
+            /* format chunk identifier */
+            writeString(view, 12, 'fmt ');
+            /* format chunk length */
+            view.setUint32(16, 16, true);
+            /* sample format (raw) */
+            view.setUint16(20, 1, true);
+            /* channel count */
+            view.setUint16(22, 1, true);
+            /* sample rate */
+            view.setUint32(24, sampleRate, true);
+            /* byte rate (sample rate * block align) */
+            view.setUint32(28, sampleRate * 2, true);
+            /* block align (channel count * bytes per sample) */
+            view.setUint16(32, 2, true);
+            /* bits per sample */
+            view.setUint16(34, 16, true);
+            /* data chunk identifier */
+            writeString(view, 36, 'data');
+            /* data chunk length */
+            view.setUint32(40, samples.length * 2, true);
+
+            floatTo16BitPCM(view, 44, samples);
+
+            return view;
+        }
+
+        function floatTo16BitPCM(output, offset, input) {
+            for (let i = 0; i < input.length; i++, offset += 2) {
+                const s = Math.max(-1, Math.min(1, input[i]));
+                output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
+            }
+        }
+
+        function writeString(view, offset, string) {
+            for (let i = 0; i < string.length; i++) {
+                view.setUint8(offset + i, string.charCodeAt(i));
+            }
+        }
+
+        // X--------------- WAVEFORM INITIALIZE ----------------X
+        var wavesurfer = WaveSurfer.create({
+            container: '#waveform',  // The container element for the waveform
+            waveColor: '#ffffff84',       // The color of the waveform
+            progressColor: '#de007b',    // The color of the progress bar
+            cursorColor: "#000",        // Ccursor color
+            // backgroundColor: '#999', // commented out cuz it doesnt look good
+            cursorWidth: 2,             // width of cursor (integers)
+            barGap: 3,              // gap between bars
+            barMinHeight: 1,        // min bar height
+            barWidth: 3,            // width / pixelation of bars
+            responsive: true,
+            height: 90,
+            barRadius: 2,
+            audioRate: 1,            // effects payback speed, 2 is +1 octave (i think)
+            autoCenter: true,       // ensures cursor is in the center when scrolling
+            normalize: true,
+        });
+
+
+        // X--------------- NODES ---------------X
+
+        // CREATE AND CONNECT NODES WITHIN WAVESURFER AUDIO CONTEXT
+        // create filter and reverb nodes
+        var convolver = wavesurfer.backend.ac.createConvolver();
+        var lowpass = wavesurfer.backend.ac.createBiquadFilter();
+
+        // create dry gain, wet gain, master gain nodes
+        var gainNodeDry = wavesurfer.backend.ac.createGain();
+        var gainNode = wavesurfer.backend.ac.createGain();
+
+        // set filter node to audio source
+        wavesurfer.backend.setFilter(lowpass);
+
+        // connect lowpass --> dry gain
+        lowpass.connect(gainNodeDry);
+
+        // connect lowpass --> reverb --> wet gain
+        lowpass.connect(convolver);
+        convolver.connect(gainNode);
+
+        // connect gain --> destination
+        gainNodeDry.connect(wavesurfer.backend.ac.destination);
+        gainNode.connect(wavesurfer.backend.ac.destination);
+
+
+        // INPUT FILE BOX
+        var inputFile = document.getElementById("inputFile");
+        var rickMayNotExport = document.getElementById("rickMayNotExport");
+        rickMayNotExport.innerHTML = "rick";
+        // Add an event listener to the file input field to update the audio player when a file is selected
+        inputFile.addEventListener("change", function () {
+            // if it's empty, load rick roll, else, load the correct file
+
+            if (inputFile.value === '') {
+                wavesurfer.load('Rick Astley - Never Gonna Give You Up (Official Music Video).mp3');
+                rickMayNotExport.innerHTML = "Upload your own file to unlock the export feature";
+                document.getElementById('downloadButton').style.display = 'none';
+            } else {                
+                // Get the selected file
+                var file = inputFile.files[0];
+                // Update the audio sources (online and offline) with file
+                var file = URL.createObjectURL(file)
+                wavesurfer.load(file);
+                document.getElementById('downloadButton').style.display = 'block';
+                rickMayNotExport.innerHTML = "";
+            };
+
+            // make the elements fade in when their shown
+            document.getElementById('infoText').style.display = 'none';
+            document.getElementById('acid').style.display = 'none';
+            document.getElementById('inputFile').style.display = 'none';
+            document.getElementById('waveformOffline').style.display = 'none';
+            $("#acid").fadeIn(5000);
+            $("#inputFile").fadeIn(5000);
+            $("#musicBox").fadeIn();
+            $("#trackGroup").fadeIn(2000);
+            $("#line").fadeIn(5000);
+            $("#grid1").fadeIn(5000);
+            $("#subMusic").fadeIn(5000);
+            
+
+            // enable all the sliders (except wet)
+            document.getElementById('acid').style.display = 'block';
+            document.getElementById('inputFile').style.display = 'block';
+            document.getElementById('trackGroup').style.display = 'flex';
+            document.getElementById('line').style.display = 'block';
+            document.getElementById('grid1').style.display = 'grid';
+
+        });
+
+        // click the logo to get rolled
+        var acidPic = document.getElementById("acidPic");
+        acidPic.onclick = function () {
+            //inputFile.files[0] = "Rick Astley - Never Gonna Give You Up (Official Music Video).mp3";
+            //console.log(inputFile.files[0]);
+            const changeFile = new Event('change');
+            inputFile.dispatchEvent(changeFile);
+        }
+
+        // ---------- FILE LENGTH INITIAL LOAD ---------------
+        var exportStatus = document.getElementById('exportStatus')
+        wavesurfer.on('ready', function () {
+            // action to be performed when the file is loaded
+            // change audio length value
+            playBackSpeed = Math.pow(2, slider1.value / 12);
+            // display audio length value and turn red if it's too long
+            var audioDuration = (wavesurfer.backend.getDuration() * (1 / playBackSpeed));
+            audioLength.innerHTML = (audioDuration / 60).toFixed(1) + " mins";
+            console.log(audioDuration / 60);
+            if (audioDuration / 60 > tooLong) {
+                subMusic.style.color = "red";
+                exportStatus.innerHTML = "TOO LONG FOR EXPORT";
+            } else {
+                subMusic.style.color = "snow";
+                exportStatus.innerHTML = "EXPORT"
+            }
+        });
+
+        // X--------------- CONTROLS ---------------X
+
+        // Prevent spacebar from triggering input file box
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 32) {
+                event.preventDefault();
+            }
+        });
+
+        // PLAY/PAUSE BUTTON
+        var playBtn = document.getElementById("playBtn");
+        playBtn.onclick = function () {
+            wavesurfer.playPause();
+        }
+        document.addEventListener('keydown', function (event) {
+            if (event.keyCode === 32) {
+                wavesurfer.playPause();
+            }
+        });
+        wavesurfer.on('finish', function () {
+            playBtn.src = "play.png";
+            wavesurfer.stop();
+        });
+        wavesurfer.on('pause', function () {
+            playBtn.src = "play.png";
+        });
+        wavesurfer.on('play', function () {
+            playBtn.src = "pause.png";
+        });
+
+        // X--------------- SLIDERS ---------------X
+        // set up slider values
+        var slider1 = document.getElementById("slider1");
+        var slider2 = document.getElementById("slider2");
+        var slider3 = document.getElementById("slider3");
+
+        var valueDisplay1 = document.getElementById("slider1-value");
+        var valueDisplay2 = document.getElementById("slider2-value");
+        var valueDisplay3 = document.getElementById("slider3-value");
+        var audioLength = document.getElementById("songLength");
+
+
+
+        // SLIDER 1 ---> ADJUST SPEED (slider 1)
+        // create playback speed variable
+        var playBackSpeed;;
+        // get submusic div
+        var subMusic = document.getElementById("subMusic");
+        var tooLong = 15;
+        // event listener for when slider is changed directly
+        slider1.addEventListener('input', function () {
+            if (wavesurfer.isPlaying()) {
+                wavesurfer.pause()
+                playBackSpeed = Math.pow(2, slider1.value / 12)
+                wavesurfer.setPlaybackRate(playBackSpeed);
+                wavesurfer.play()
+            } else {
+                wavesurfer.pause()
+                playBackSpeed = Math.pow(2, slider1.value / 12)
+                wavesurfer.setPlaybackRate(playBackSpeed);
+            }
+            // change slider display value
+            valueDisplay1.innerHTML = slider1.value;
+            // change audio length value
+            playBackSpeed = Math.pow(2, slider1.value / 12);
+            // display audio length value and turn red if it's too long
+            var audioDuration = (wavesurfer.backend.getDuration() * (1 / playBackSpeed));
+            audioLength.innerHTML = (audioDuration / 60).toFixed(1) + " mins";
+            console.log(audioDuration / 60);
+            if (audioDuration / 60 > tooLong) {
+                subMusic.style.color = "red";
+                exportStatus.innerHTML = "TOO LONG FOR EXPORT";
+            } else {
+                subMusic.style.color = "snow";
+                exportStatus.innerHTML = "EXPORT";
+            }
+
+        });
+
+
+        // X---------- VOLUME CONTROLS ----------X //
+
+        // creating wet% variable
+        var wet = 0
+
+        // VOLUME CONTROLS
+        // Get volume slider
+        var sliderVol = document.querySelector('#sliderVol');
+        // set initial volumes
+        gainNode.gain.value = 0
+        gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
+        wavesurfer.setVolume(0)
+
+        //when volume is moved, adjust volume of gain node and wavesurfer playback
+        sliderVol.addEventListener('input', function () {
+            // IF 'NO VERB' SELECTED, WET = 0
+            if (!selectElement.value) {
+                var wet = 0
+                gainNode.gain.value = wet * sliderVol.value / 100;
+                gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
+
+            } else {
+                var wet = slider2.value / 100
+                gainNode.gain.value = wet * sliderVol.value / 100;
+                gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
+            };
+        });
+
+        //LOW PASS FILTER
+        // create freq variable to convert linear slider value to exp
+        var freq = Math.round(Math.pow(10, slider3.value / 100))
+        lowpass.frequency.value = 22000
+        slider3.addEventListener('input', function () {
+            var freq = Math.round(Math.pow(10, slider3.value / 100))
+            if (freq <= 22000) {
+                valueDisplay3.innerHTML = freq;
+                lowpass.frequency.value = freq;
+            } else {
+                valueDisplay3.innerHTML = 22000;
+                lowpass.frequency.value = 22000;
+            }
+        });
+
+
+        // X--------------- REVERB ---------------X
+
+        // SLIDER 2 ---> DRY/WET
+        document.getElementById('slider2').disabled = true;
+        //when volume is moved, adjust volume of gain node and wavesurfer playback
+        slider2.addEventListener('input', function () {
+            var wet = slider2.value / 100
+            valueDisplay2.innerHTML = slider2.value + "%";
+            gainNode.gain.value = wet * sliderVol.value / 100;
+            gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
+        });
+
+        // LOADING REVERB FILES
+
+        var imp1 = "1_Large Long Echo Hall.wav";
+        var imp2 = "2_Large Wide Echo Hall.wav";
+        var imp3 = "3_Right Glass Triangle.wav";
+
+        // Get the reverb files select element
+        var selectElement = document.getElementById("wavFiles");
+        var slider2WetPercent = document.getElementById("slider2WetPercent");
+
+        // Add an event listener to the select element
+        selectElement.addEventListener("change", function () {
+            // IF 'NO VERB' SELECTED, APPLY NO VERB; ELSE, APPLY SELECTED VERB
+            if (!selectElement.value) {
+                convolver.buffer = wavesurfer.backend.ac.createBuffer(1, 1, 44100);
+                document.getElementById('slider2').disabled = true;
+                var wet = 0
+                gainNode.gain.value = wet * sliderVol.value / 100;
+                gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
+                slider2WetPercent.style.color = '#00000000';
+
+            } else {
+                slider2WetPercent.style.color = 'black';
+                var wet = slider2.value / 100
+                gainNode.gain.value = wet * sliderVol.value / 100;
+                gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
+                // enable slider
+                document.getElementById('slider2').disabled = false;
+                // Get the selected file path
+                var filePath = selectElement.value;
+
+                // Create a new XMLHttpRequest object
+                var xhr = new XMLHttpRequest();
+
+                // Open the file using the GET method
+                xhr.open('GET', filePath);
+
+                // Set the responseType to arraybuffer
+                xhr.responseType = 'arraybuffer';
+
+                // Send the request
+                xhr.send();
+
+                // Access the ArrayBuffer once it has been loaded
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        // Get the ArrayBuffer
+                        var arrayBuffer = xhr.response;
+
+                        // Use the ArrayBuffer to set the convolver buffer
+                        wavesurfer.backend.ac.decodeAudioData(arrayBuffer).then(function (audioBuffer) {
+                            convolver.buffer = audioBuffer;
+                        });
+                    }
+                };
+            };
+        });
+
+        // X--------------- PRESETS SETUP ----------------X
+
+        // Get the audio player and select element
+        var presets = document.getElementById("presets");
+        // Add an event listener to the select element
+        presets.addEventListener("change", function () {
+            // pull preset data from preset # value
+            var selectedPreset = presets.value;
+            var presetArray = JSON.parse(selectedPreset);
+
+
+            // nicely extract and label array values
+            var semitones = presetArray[0];         //playback spd
+            var filterSlider = presetArray[1];      //filter
+            var reverbRoom = presetArray[2];      //reverb type
+            var wetSlider = presetArray[3];      //reverb wet
+            console.log(reverbRoom);
+
+            // Create a new input event
+            var adjustSlider = new Event('input');
+            var changeEvent = new Event('change');
+
+            // set playback speed value,
+            slider1.value = semitones;
+            slider1.dispatchEvent(adjustSlider);
+
+            // set filter to value [1]
+            slider3.value = filterSlider;
+            slider3.dispatchEvent(adjustSlider);
+
+            // set reverb room value ([2]) and mix value ([3])
+            selectElement.selectedIndex = reverbRoom;
+            slider2.value = wetSlider;
+            slider2.dispatchEvent(adjustSlider);
+            selectElement.dispatchEvent(changeEvent);
+
+        });
+
+
+
+        // X--------------- EVERYTHING DISABLED ON STARTUP ----------------X
+        document.getElementById('musicBox').style.display = 'none';
+        document.getElementById('trackGroup').style.display = 'none';
+        document.getElementById('grid1').style.display = 'none';
+        document.getElementById('downloadButton').style.display = 'none';
+        document.getElementById('line').style.display = 'none';
+        document.getElementById('infoText').style.display = 'none';
+        document.getElementById('subMusic').style.display = 'none';
+
+        // show the first few elements
+        document.getElementById('acid').style.display = 'none';
+        document.getElementById('inputFile').style.display = 'none';
+        document.getElementById('footerDiv1').style.display = 'none';
+        $("#acid").fadeIn(2000);
+        $("#inputFile").fadeIn(4000);
+        $("#infoText").fadeIn(8000);
+        $("#footerDiv1").fadeIn(10000);
+        document.getElementById('infoText').style.display = 'flex';
+        document.getElementById('footerDiv1').style.display = 'flex';
+
+
+
+
+        // X--------------- SETUP FOR EXPORTING AUDIO ----------------X
+        // get download button
+        const downloadButton = document.getElementById('downloadButton');
+        const exportInProg = document.getElementById('exportInProg');
+
+        // when dl button clicked, do this
+        downloadButton.addEventListener('click', function () {
+            if (exportStatus.innerHTML === "TOO LONG FOR EXPORT") {
+                // if the export is too long, dont export
+            } else { // initiate file export
+                // set the audio context duration (duration of file to export)
+                // if there's reverb, add an extra 5 seconds :)
+                downloadButton.style.display = "none";
+                exportInProg.style.display = "block";
+                exportInProg.innerHTML = "creating offline audio context...";
+                var reverbTime;
+                if (!selectElement.value) {
+                    reverbTime = 0;
+                } else { reverbTime = 5; };
+
+
+                playBackSpeed = Math.pow(2, slider1.value / 12)
+                var rate = 44100
+                var audioDuration = (wavesurfer.backend.getDuration() * (1 / playBackSpeed) + reverbTime) * rate; //eventually change + 3 to + reverb time
+
+                // create the offline audio context (with the right length)
+                var offlineCtx = new OfflineAudioContext(1, audioDuration, 44100); // placeholder ctx
+
+                // create the offline wavesurfer instance
+                var wavesurferOffline = WaveSurfer.create({
+                    container: '#waveformOffline',  // The container element for the waveform
+                    audioRate: 1,            // effects payback speed, 2 is +1 octave (i think)
+                    normalize: true,
+                    audioContext: offlineCtx,
+
+                });
+
+                // X--------------- OFFLINE NODES ---------------X
+
+                // CREATE AND CONNECT NODES WITHIN WAVESURFER OFFLINE AUDIO CONTEXT
+
+                // create filter and reverb nodes
+                var convolverOffline = offlineCtx.createConvolver();
+                var lowpassOffline = offlineCtx.createBiquadFilter();
+
+                // create dry gain, wet gain, master gain nodes
+                var gainNodeDryOffline = offlineCtx.createGain();
+                var gainNodeOffline = offlineCtx.createGain();
+
+                // set filter node to audio source
+                wavesurferOffline.backend.setFilter(lowpassOffline);
+
+                // connect lowpass --> dry gain --> master gain
+                lowpassOffline.connect(gainNodeDryOffline);
+
+                // connect lowpass --> reverb --> wet gain --> master gain
+                lowpassOffline.connect(convolverOffline);
+                convolverOffline.connect(gainNodeOffline);
+
+                // connect master gain --> destination
+                gainNodeDryOffline.connect(offlineCtx.destination);
+                gainNodeOffline.connect(offlineCtx.destination);
+
+
+                // set node values, playback speed, playback volume
+                wavesurferOffline.setVolume(0); // set this volume set to 0 for some reason...
+                playBackSpeed = Math.pow(2, slider1.value / 12); // convert playback spd to semitones
+                wavesurferOffline.setPlaybackRate(playBackSpeed); // set playback spd
+
+                // lowpass value
+                var freq = Math.round(Math.pow(10, slider3.value / 100))
+                if (freq <= 22000) {
+                    lowpassOffline.frequency.value = freq;
+                } else {
+                    lowpassOffline.frequency.value = 22000;
+                };
+
+                // reverb value setting
+                if (!selectElement.value) {
+                    convolverOffline.buffer = wavesurferOffline.backend.ac.createBuffer(1, 1, 44100);
+                    document.getElementById('slider2').disabled = true;
+                    var wet = 0
+                    gainNodeOffline.gain.value = wet;
+                    gainNodeDryOffline.gain.value = (1 - wet);
+
+                } else {
+                    var wet = slider2.value / 100
+                    gainNodeOffline.gain.value = wet;
+                    gainNodeDryOffline.gain.value = (1 - wet);
+                    // enable slider
+                    document.getElementById('slider2').disabled = false;
+                    // Get the selected file path
+                    var filePath = selectElement.value;
+
+                    // Create a new XMLHttpRequest object
+                    var xhr = new XMLHttpRequest();
+
+                    // Open the file using the GET method
+                    xhr.open('GET', filePath);
+
+                    // Set the responseType to arraybuffer
+                    xhr.responseType = 'arraybuffer';
+
+                    // Send the request
+                    xhr.send();
+
+                    // Access the ArrayBuffer once it has been loaded
+                    xhr.onload = function () {
+                        if (xhr.status === 200) {
+                            // Get the ArrayBuffer
+                            var arrayBuffer = xhr.response;
+
+                            // Use the ArrayBuffer to set the convolver buffer
+                            wavesurferOffline.backend.ac.decodeAudioData(arrayBuffer).then(function (audioBuffer) {
+                                convolverOffline.buffer = audioBuffer;
+                            });
+                        };
+                    };
+                };
+
+                exportInProg.innerHTML = "loading audio...";
+                // LOAD THE FILE
+                var file = inputFile.files[0];
+                var name = file.name;
+                var file = URL.createObjectURL(file)
+                wavesurferOffline.load(file);
+
+                exportInProg.innerHTML = "decoding file...";
+                // when the file has loaded, decode it
+                wavesurferOffline.on('ready', function () {
+                    console.log(wavesurferOffline.backend.getDuration());
+                    // get and start backend source
+                    var source = wavesurferOffline.backend.source;
+                    source.start();
+                    offlineCtx.startRendering().then(function (renderedBuffer) {
+                        // get buffer info
+                        const samples = renderedBuffer.getChannelData(0); // Get the audio samples from the rendered buffer
+
+                        // normalize buffer (make it loud baby)
+                        const maxAbsValue = samples.reduce((max, value) => Math.max(max, Math.abs(value)), 0); // Calculate the maximum absolute value of the samples
+                        const volume = 1; // Desired volume level (between 0 and 1)
+                        for (let i = 0; i < samples.length; i++) {
+                            samples[i] = samples[i] / maxAbsValue * volume; // Normalize and adjust the volume of each sample
+                           // exportInProg.innerHTML = "i";
+                        }
+
+                        const sampleRate = renderedBuffer.sampleRate; // Get the sample rate of the rendered buffer
+                        exportInProg.innerHTML = "encoding WAV...";
+                        const wavData = encodeWAV(samples, sampleRate); // Convert the audio data to a WAV file
+                        // create downloadable object
+                        const blob = new Blob([wavData], { type: 'audio/wav' });
+                        const a = document.createElement('a');
+                        const url = URL.createObjectURL(blob);
+                        a.download = name + ' ACIDIFIED.wav';
+                        a.href = url;
+
+                        a.click(); // Simulate a click on the link to trigger the download
+                        exportInProg.style.display = "none";
+                        downloadButton.style.display = "block";
+
+                    });
+
+                });
+            };
+
+
+        });
+
+        // what happens when DL link is clicked
+        /*
+        const downloadLink = document.getElementById('downloadLink');
+        downloadLink.style.display = "none";
+        downloadLink.addEventListener('click', function () {
+            downloadLink.style.display = "none";
+            downloadButton.style.display = "block";
+        });
+        */
+    </script>
+</body>
+
+</html>
