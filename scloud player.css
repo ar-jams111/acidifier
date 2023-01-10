@@ -317,12 +317,17 @@ position: relative;
 @media (max-width: 500px) {
     #downloadButton {
         border-radius: 8px; /* Add custom styles for the audio player */
-        font-size: 16px; /* Increase the font size of the controls */
-        padding: 8px; /* Add some padding around the controls */
-        letter-spacing: 3px;
-        width: 300px;
-        margin-top: 5px;
+        padding: 2px; /* Add some padding around the controls */
+        margin-top: 0px;
+        font-family: 'poppins', sans-serif;
+        letter-spacing: normal;
+        font-size: medium;
     }
+}
+
+#downloadButton:active {
+    transform: scale(0.95);
+    color: #ffffff
 }
 
 #audioLength {
@@ -337,10 +342,5 @@ position: relative;
     }
 }
 
-
-#downloadButton:active {
-    transform: scale(0.95);
-    color: #ffffff
-}
 
 
