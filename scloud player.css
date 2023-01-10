@@ -50,7 +50,7 @@
 position: relative;
 color: snow; 
 text-align: center; 
-font-family: fantasy; 
+font-family: Impact, fantasy; 
 letter-spacing: 10px; 
 font-size:18px;
 }
@@ -234,15 +234,15 @@ position: relative;
     padding: 0px;
     box-sizing: border-box;
     margin-top: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 #slider2WetPercent {
-    margin-bottom: 17px;
+    margin-bottom: 0px;
     color: #00000000;
     text-align: center;
-    font-family: fantasy;
-    letter-spacing: 2px;    
+    font-family: Impact, fantasy;
+    letter-spacing: 2px;
 }
 
 @media (max-width: 500px) {
@@ -275,7 +275,7 @@ position: relative;
     text-align: center;
     box-shadow: 0 0 20px rgb(128, 128, 128);
     letter-spacing: 4px;
-    font-family: fantasy;
+    font-family: Impact, fantasy;
     width: 250px;
     transition: all 0.1s ease;
     margin-top: 0px;
