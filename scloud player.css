@@ -57,8 +57,9 @@ font-size:18px;
 
 @media (max-width: 500px) {
 #acid {
-    font-size: 18px;
-    letter-spacing: 2px;
+    font-size: 16px;
+    letter-spacing: normal;
+    font-family: 'poppins', sans-serif;
 }
 }
 
@@ -237,6 +238,21 @@ position: relative;
     margin-bottom: 10px;
 }
 
+#slider1-value {
+    color: black;
+    text-align: center;
+    font-family: fantasy;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 500px) {
+    #slider1-value {
+        font-family: 'poppins', sans-serif;
+        letter-spacing: normal;
+        font-size: large;
+    }
+}
+
 #slider2WetPercent {
     margin-bottom: 0px;
     color: #00000000;
@@ -247,7 +263,24 @@ position: relative;
 
 @media (max-width: 500px) {
     #slider2WetPercent {
-        margin-bottom: 0px;
+        font-family: 'poppins', sans-serif;
+        letter-spacing: normal;
+        font-size: large;
+    }
+}
+
+#slider3-value {
+    color: black;
+    text-align: center;
+    font-family: fantasy;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 500px) {
+    #slider3-value {
+        font-family: 'poppins', sans-serif;
+        letter-spacing: normal;
+        font-size: large;
     }
 }
 
@@ -309,3 +342,5 @@ position: relative;
     transform: scale(0.95);
     color: #ffffff
 }
+
+
