@@ -469,12 +469,12 @@
 
                     // Add an event listener to the select element
                     selectElement.addEventListener("change", function () {
+                        document.getElementById('slider2').disabled = true;
                         // IF 'NO VERB' SELECTED, APPLY NO VERB; ELSE, APPLY SELECTED VERB
                         if (selectElement.selectedIndex === 0) {
                             console.log(selectElement.value);
-                            convolver.buffer = wavesurfer.backend.ac.createBuffer(1, 1, 44100);
-                            document.getElementById('slider2').disabled = true;
-                            var wet = 0
+                            convolver.buffer = wavesurfer.backend.ac.createBuffer(1, 1, 44100);                
+                            var wet = 0;
                             gainNode.gain.value = wet * sliderVol.value / 100;
                             gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
                             slider2WetPercent.style.color = '#00000000';
@@ -514,10 +514,6 @@
                                         convolver.buffer = audioBuffer;
                                     });
                                 }
-                            };
-
-                            if (selectElement.selectedIndex === 0) {
-                                document.getElementById('slider2').disabled = true;
                             };
                         };
                     });
