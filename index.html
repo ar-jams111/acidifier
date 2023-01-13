@@ -111,26 +111,6 @@
             </div>
 
 
-
-            <!-- FOOTER -->
-                <!--
-                <footer class="footer">
-                    <div id="footerDiv1">
-                        <p>
-                            The Acidifier was created by Atticus Rush, Chief Wizard of
-                            <a style="color: deepskyblue;" href="https://www.acidriotmusic.com/">AcidRiotMusic.com</a><br /><br />
-                            <a style="color: deeppink;" href="https://instagram.com/ar_jams111">insta</a>&nbsp;
-                            <a style="color: darkorange;" href="https://soundcloud.com/atticus-rush">soundcloud</a>&nbsp;
-                            <a style="color: gold;" href="https://www.acidriotmusic.com/beats">beats</a>&nbsp;
-                            <a style="color: lawngreen;" href="https://open.spotify.com/artist/04RM1Idq4HPTR4aLqEr8MI">spotify</a>&nbsp;
-                            <a style="color: blueviolet;" href="https://linktr.ee/AR_JAMS111">other stuff</a>
-
-                            <!--<img src="acidRiotMusicPic.png" id="acidPic" /> -->
-                <!--
-                        </p>
-                    </div>
-                </footer>
-            -->
                 <!-- //////////////////------------SCRIPT------------////////////////////////// -->
 
 
@@ -534,6 +514,10 @@
                                         convolver.buffer = audioBuffer;
                                     });
                                 }
+                            };
+
+                            if (selectElement.selectedIndex === 0) {
+                                document.getElementById('slider2').disabled = true;
                             };
                         };
                     });
