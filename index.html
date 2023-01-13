@@ -60,7 +60,7 @@
                 <!-- slider 1 -->
                 <input type="range" min="-24" max="24" value="0" class="slider" id="slider1">
                 <!-- menu 2 -->
-                <input type="range" min="0" max="100" value="50" class="slider" id="slider2">
+                <input type="range" min="0" max="100" value="0" class="slider" id="slider2">
                 <!-- slider 3 -->
                 <input type="range" min="100" max="435" value="435" class="slider" id="slider3">
 
@@ -486,6 +486,7 @@
                             gainNode.gain.value = wet * sliderVol.value / 100;
                             gainNodeDry.gain.value = (1 - wet) * sliderVol.value / 100;
                             slider2WetPercent.style.color = '#00000000';
+                            slider2.value = 0;
 
                         } else {
                             slider2WetPercent.style.color = 'black';
