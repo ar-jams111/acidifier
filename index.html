@@ -9,6 +9,16 @@
     <script src="https://unpkg.com/wavesurfer.js@6.4.0/dist/wavesurfer.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0WD6YFYBJG"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-0WD6YFYBJG');
+    </script>
+
 
 </head>
 <body class="body">
@@ -571,10 +581,10 @@
                     document.getElementById('acid').style.display = 'none';
                     document.getElementById('inputFile').style.display = 'none';
                     document.getElementById('footerDiv1').style.display = 'none';
-                    $("#acid").fadeIn(2000);
-                    $("#inputFile").fadeIn(4000);
-                    $("#infoText").fadeIn(8000);
-                    $("#footerDiv1").fadeIn(10000);
+                    $("#acid").fadeIn(1000);
+                    $("#inputFile").fadeIn(2000);
+                    $("#infoText").fadeIn(4000);
+                    $("#footerDiv1").fadeIn(5000);
                     document.getElementById('infoText').style.display = 'flex';
                     document.getElementById('footerDiv1').style.display = 'flex';
 
